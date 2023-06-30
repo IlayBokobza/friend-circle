@@ -1,0 +1,59 @@
+.login{
+    display: grid;
+    grid-template-columns: 6fr 1fr;
+    height: 100vh;
+
+    &__title{
+        grid-row: 1;
+        display: grid;
+        place-items: center;
+
+        h1{
+            text-align: center;
+            font-size: 13.3rem;
+            font-weight: 300;
+        }
+    }
+
+    &__side{
+        grid-row: 1;
+        background-color: var(--color4);
+        color: #000;
+        padding: 1rem 3rem;
+        min-width: 24.5rem;
+
+        display: flex;
+        flex-direction: column;
+        
+        h2{
+            font-size: 4.5rem;
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        input{
+            width: 100%;
+            margin-bottom: 3rem;
+
+            &:last-of-type{
+                margin-bottom: 4rem;
+            }
+        }
+
+        button{
+            margin: 0 auto;
+            margin-bottom: 5rem;
+        }
+
+        &__switch-page{
+            font-size: 2rem;
+            color: #000;
+            text-decoration: none;
+            text-align: center;
+            min-width: 80%;
+            margin: 0 auto;
+            border-bottom: .2rem solid #000;
+            white-space: nowrap;
+        }
+    }
+}

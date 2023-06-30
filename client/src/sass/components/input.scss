@@ -1,0 +1,20 @@
+.input{
+    background-color: var(--color3);
+    font-size: 2rem;
+    padding: 1rem 2rem;
+    border: .2rem solid #000;
+    border-radius: .7rem;
+    transition: .1s outline;
+    direction: rtl;
+    box-shadow: 0 .4rem .4rem rgba(#000,.25);
+    
+    &::placeholder{
+        font-family: 'Fredoka', sans-sef;
+        text-align: right;
+    }
+
+    &--ltr{
+        direction: ltr;
+    }
+
+}

@@ -1,0 +1,33 @@
+.membersTable{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    
+    .row{
+        justify-content: space-around;
+        display: flex;
+        font-size: 2.4rem;
+        
+        &--main{
+            border: 1px solid #000;
+        }
+        
+        &:not(.row--main){
+            padding: .5rem 0;
+        }
+        
+        .col{
+            flex: 1;
+        }
+        
+        &:not(:last-child){
+            border-bottom: 1px solid #000;
+            width: 100%
+        }
+
+
+        &:first-child{
+            font-weight: 800;
+        }
+    }
+}

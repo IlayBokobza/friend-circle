@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&display=swap');
+
+//views
+@import "./views/login.scss";
+@import "./views/404.scss";
+@import "./views/create.scss";
+
+//components
+@import "./components/input.scss";
+@import "./components/button.scss";
+@import "./components/feedback.scss";
+@import "./components/innerPage.scss";
+@import "./components/dialog.scss";
+@import "./components/membersTable.scss";
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-weight: 400;
+}
+
+:root{
+    font-size: 62.5%; // 1rem = 10px
+    font-family: 'Fredoka', sans-serif;
+    color: #ffffff;
+
+    --color1:#222831;
+    --color2:#393E46;
+    --color3:#FFD369;
+    --color4:#EEEEEE;
+}
+
+// ::selection{
+//     background-color: var(--color3);
+// }
+
+body{
+    background-color: var(--color1);
+}
+
+.pr{
+    position: relative;
+}
+
+@keyframes fade-in {
+    from{
+        opacity: 0%;
+    }
+    to{
+        opacity: 100%;
+    }
+}
+
+@keyframes fade-out {
+    from{
+        opacity: 100%;
+    }
+    to{
+        opacity: 0%;
+    }
+}

@@ -1,0 +1,61 @@
+.btn{
+    font-family: 'Fredoka', sans-serif;
+    font-size: 2rem;
+    padding: 1rem 2rem;
+
+    border-radius: 1rem;
+    border: .2rem solid #000;
+    text-decoration: none;
+    display: inline-block;
+    
+    cursor: pointer;
+    transition: all .2s;
+    box-shadow: 0 .4rem .4rem rgba(#000,.25);
+    outline: none !important;
+
+    &:hover{
+        transform: translateY(-.5rem);
+        box-shadow: 0 .8rem .8rem rgba(#000,.25);
+    }
+
+    &:active{
+        transform: translateY(.1rem);
+        box-shadow: 0 .3rem .3rem rgba(#000,.25);
+    }
+
+    &--round{
+        font-family: sans-serif;
+        border-radius: 50%;
+        font-size: 5rem;
+        width: 7rem;
+        height: 7rem;
+        position: relative;
+
+        .btn__text{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+        }
+    }
+
+    &--color-1{
+        background-color: var(--color1);
+        color: #fff;
+    }
+
+    &--color-2{
+        background-color: var(--color2);
+        color: #fff;
+    }
+
+    &--color-3{
+        background-color: var(--color3);
+        color: #000;
+    }
+    
+    &--color-4{
+        background-color: var(--color4);
+        color: #000;
+    }
+}

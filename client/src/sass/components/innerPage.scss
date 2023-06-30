@@ -1,0 +1,25 @@
+.innerpage{
+    display: grid;
+    place-items: center;
+    height: 100vh;
+    font-size: 2rem;
+    
+    &__title{
+        font-size: 3rem;
+        font-weight: 100;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    &__container{
+        background-color: var(--color4);
+        width: 80vw;
+        height: 80vh;
+        border-radius: .4rem;
+        color: #000;
+        padding: 1rem;
+    }
+}
