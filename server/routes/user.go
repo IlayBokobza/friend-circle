@@ -27,7 +27,7 @@ func CreateUserRoutes() {
 	loginEp.Create()
 }
 
-func signup(w http.ResponseWriter, r *http.Request, _ map[string]string) {
+func signup(w http.ResponseWriter, r *http.Request, _ map[string]interface{}) {
 	var res, _ = gover.DynamicJSONBodyParser(r.Body)
 	var email = res["email"].(string)
 	var name = res["name"].(string)
@@ -53,7 +53,7 @@ func signup(w http.ResponseWriter, r *http.Request, _ map[string]string) {
 
 }
 
-func login(w http.ResponseWriter, r *http.Request, _ map[string]string) {
+func login(w http.ResponseWriter, r *http.Request, _ map[string]interface{}) {
 	var res, _ = gover.DynamicJSONBodyParser(r.Body)
 	var email = res["email"].(string)
 	var password = res["password"].(string)
@@ -95,7 +95,7 @@ func login(w http.ResponseWriter, r *http.Request, _ map[string]string) {
 	}
 }
 
-func getUser(w http.ResponseWriter, r *http.Request, md map[string]string) {
+func getUser(w http.ResponseWriter, r *http.Request, md map[string]interface{}) {
 	var j, err = json.Marshal(md)
 
 	if err != nil {

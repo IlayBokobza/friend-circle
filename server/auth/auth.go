@@ -68,7 +68,7 @@ func Auth(w http.ResponseWriter, r *http.Request, md *gover.MiddlewareData) bool
 	}
 
 	(*md)["email"] = user.Email
-	(*md)["id"] = claims["ID"].(string)
+	(*md)["id"] = ID
 	(*md)["name"] = user.Name
 
 	return true
