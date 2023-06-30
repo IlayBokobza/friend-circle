@@ -8,6 +8,7 @@ import (
 	"friends.ilaydev.com/database"
 	"friends.ilaydev.com/models/quiz"
 	"github.com/IlayBokobza/gover"
+	"github.com/mitchellh/mapstructure"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -21,11 +22,66 @@ func CreateQuizRoutes() {
 	ep.Create()
 
 	ep = gover.Endpoint("/api/quizes/minimal")
-	ep.Get(getQuizName)
+	ep.Get(getQuizMinimal)
+	ep.Post(quizLogin)
 	ep.Create()
 }
 
-func getQuizName(w http.ResponseWriter, r *http.Request, _ map[string]interface{}) {
+func quizLogin(w http.ResponseWriter, r *http.Request, _ map[string]interface{}) {
+	var idStr = r.URL.Query().Get("id")
+	var data, err = gover.DynamicJSONBodyParser(r.Body)
+
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+		return
+	}
+
+	ID, err := primitive.ObjectIDFromHex(idStr)
+
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+		return
+	}
+
+	q, err := quiz.Get(ID)
+
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			w.WriteHeader(http.StatusNotFound)
+		} else {
+			w.WriteHeader(http.StatusInternalServerError)
+		}
+		w.Write([]byte(err.Error()))
+		return
+	}
+
+	var email = data["email"].(string)
+	var password = data["password"].(string)
+	for _, m := range q.Members {
+		if m.Email == email {
+			if m.Password == password {
+				j, err := json.Marshal(m)
+
+				if err != nil {
+					w.WriteHeader(http.StatusInternalServerError)
+					w.Write([]byte(err.Error()))
+					return
+				}
+
+				w.Write(j)
+				return
+			}
+			break
+		}
+	}
+
+	w.WriteHeader(http.StatusUnauthorized)
+	w.Write([]byte("שם משתמש או סיסמה לא נכונים"))
+}
+
+func getQuizMinimal(w http.ResponseWriter, r *http.Request, _ map[string]interface{}) {
 	var idStr = r.URL.Query().Get("id")
 	var ID, err = primitive.ObjectIDFromHex(idStr)
 
@@ -47,7 +103,25 @@ func getQuizName(w http.ResponseWriter, r *http.Request, _ map[string]interface{
 		return
 	}
 
-	w.Write([]byte(q.Title))
+	var quizMini = quiz.QuizMinmal{
+		Title:   q.Title,
+		Members: []quiz.MemberMinimal{},
+		ID:      q.ID,
+	}
+	//format data
+	for _, m := range q.Members {
+		quizMini.Members = append(quizMini.Members, quiz.MemberMinimal{Name: m.Name, ID: m.ID})
+	}
+
+	j, err := json.Marshal(quizMini)
+
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(err.Error()))
+		return
+	}
+
+	w.Write(j)
 }
 
 func getQuizes(w http.ResponseWriter, r *http.Request, md map[string]interface{}) {
@@ -95,8 +169,22 @@ func postQuiz(w http.ResponseWriter, r *http.Request, md map[string]interface{})
 	}
 
 	var ID = md["id"].(primitive.ObjectID)
+	var members = []quiz.Member{}
+	for _, mRaw := range b["members"].([]interface{}) {
+		var m = mRaw.(map[string]interface{})
+		var response quiz.Response
+		mapstructure.Decode(m["respone"], &response)
 
-	q, err := quiz.Create(b["title"].(string), b["members"].([]interface{}), ID)
+		members = append(members, quiz.Member{
+			Name:     m["name"].(string),
+			Email:    m["email"].(string),
+			Password: m["password"].(string),
+			Response: response,
+			ID:       primitive.NewObjectID(),
+		})
+	}
+
+	q, err := quiz.Create(b["title"].(string), members, ID)
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)

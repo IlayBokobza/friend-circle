@@ -16,11 +16,23 @@ type Quiz struct {
 	Owner   primitive.ObjectID `bson:"owner" json:"-"`
 }
 
+type QuizMinmal struct {
+	Title   string             `json:"title"`
+	ID      primitive.ObjectID `json:"id" bson:"_id"`
+	Members []MemberMinimal    `json:"members"`
+}
+
 type Member struct {
-	Name     string   `json:"name"`
-	Email    string   `json:"email"`
-	Password string   `json:"password"`
-	Response Response `json:"response"`
+	Name     string             `json:"name"`
+	Email    string             `json:"email"`
+	Password string             `json:"password"`
+	Response Response           `json:"response"`
+	ID       primitive.ObjectID `json:"id" bson:"_id"`
+}
+
+type MemberMinimal struct {
+	Name string             `json:"name"`
+	ID   primitive.ObjectID `json:"id" bson:"_id"`
 }
 
 type Response struct {
@@ -30,11 +42,12 @@ type Response struct {
 	CloseFriend []primitive.ObjectID `json:"closeFriend"`
 }
 
-func Create(title string, members []interface{}, owner primitive.ObjectID) (Quiz, error) {
+func Create(title string, members []Member, owner primitive.ObjectID) (Quiz, error) {
 	//creates context
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	//create member
 	var res, err = database.DB.Collection("quizes").InsertOne(ctx, bson.M{"owner": owner, "title": title, "members": members})
 
 	if err != nil {
