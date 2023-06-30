@@ -58,10 +58,10 @@ export default function Signup(){
             <div className="login__title"><h1>מעגל <br/> החברים</h1></div>
             <div className="login__side">
                 <h2>הרשמה</h2>
-                <Input lrt setFunc={setEmail} placeholder="איימל"></Input>
-                <Input setFunc={setName} placeholder="שם"></Input>
-                <Input setFunc={setPassword} placeholder="סיסמה" type="password"></Input>
-                <Input setFunc={setPassword2} placeholder="סיסמה שוב" type="password"></Input>
+                <Input value={email} lrt setFunc={setEmail} placeholder="איימל"></Input>
+                <Input value={name} setFunc={setName} placeholder="שם"></Input>
+                <Input value={password} setFunc={setPassword} placeholder="סיסמה" type="password"></Input>
+                <Input value={password2} setFunc={setPassword2} placeholder="סיסמה שוב" type="password"></Input>
                 <Feedback show={!!feedback} text={feedback}></Feedback>
                 <Button onClick={handleClick} text="התחברות" color={1}></Button>
                 <Link className="login__side__switch-page" to={"/login"}>?יש לך כבר משתמש</Link>

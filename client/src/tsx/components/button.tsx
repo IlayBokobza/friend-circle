@@ -1,7 +1,9 @@
 import { MouseEventHandler } from "react"
 import { Link } from "react-router-dom"
 
-export default function Button(props:{text:string,color:number,round?:boolean,linkTo?:string,onClick?:MouseEventHandler<HTMLButtonElement>}){
+type Color = 1 | 2 |3 | 4
+
+export default function Button(props:{text:string,color:Color,round?:boolean,linkTo?:string,onClick?:MouseEventHandler<HTMLButtonElement>}){
 
     
     function getClassName(){

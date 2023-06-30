@@ -7,7 +7,7 @@ export type User = {
   token:string
 }
 
-export const counterSlice = createSlice({
+export const userSlice = createSlice({
   name: 'user',
   initialState: {
     name:"",
@@ -25,6 +25,6 @@ export const counterSlice = createSlice({
   },
 })
 
-export const { setAll } = counterSlice.actions
+export const { setAll } = userSlice.actions
 
-export default counterSlice.reducer
+export default userSlice.reducer

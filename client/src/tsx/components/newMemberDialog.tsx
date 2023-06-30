@@ -15,6 +15,8 @@ export default function NewMemberDialog(props:{addMember:Function,showSate:[bool
     }
     
     function resetData(){
+        setName("")
+        setEmail("")
         setPassword("")
     }
 
@@ -26,8 +28,8 @@ export default function NewMemberDialog(props:{addMember:Function,showSate:[bool
     return (
         <Dialog onClose={resetData} showSate={props.showSate} ref={dialogRef}>
             <h1>משתתף חדש</h1>
-            <Input setFunc={setName} placeholder="שם"/>
-            <Input setFunc={setEmail} placeholder="איימל" lrt/>
+            <Input value={name} setFunc={setName} placeholder="שם"/>
+            <Input value={email} setFunc={setEmail} placeholder="איימל" lrt/>
             <div className="pr">
                 <span onClick={generatePassword} className="dialog__icon material-symbols-outlined">auto_fix</span>
                 <Input lrt value={password} setFunc={setPassword} placeholder="סיסמה"/>
