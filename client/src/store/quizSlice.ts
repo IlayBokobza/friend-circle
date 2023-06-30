@@ -6,6 +6,12 @@ export type Quiz = {
   members:Member[];
 }
 
+export type QuizMinimal = {
+    title:string;
+    id:string;
+    members:MemberMinimal[];
+}
+
 export type NewQuiz = {
   title:string;
   members:Member[];
@@ -16,12 +22,18 @@ export type Member = {
   email:string;
   password:string;
   response:Response;
+  id:string;
 }
 
 export type NewMember = {
   name:string,
   email:string,
   password:string
+}
+
+export type MemberMinimal = {
+  name:string;
+  id:string,
 }
 
 export type Response = {

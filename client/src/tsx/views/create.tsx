@@ -35,7 +35,7 @@ export default function Create(){
     }
     
     function addMember(name:string,email:string,password:string){
-        const m = {name,email,password,response:{
+        const m = {name,email,password,id:"",response:{
             natrual:[],
             friend:[],
             goodFriend:[],

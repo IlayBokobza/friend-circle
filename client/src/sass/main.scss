@@ -5,6 +5,7 @@
 @import "./views/404.scss";
 @import "./views/home.scss";
 @import "./views/create.scss";
+@import "./views/quizForm.scss";
 
 //components
 @import "./components/input.scss";
@@ -30,11 +31,10 @@
     --color2:#393E46;
     --color3:#FFD369;
     --color4:#EEEEEE;
-}
 
-// ::selection{
-//     background-color: var(--color3);
-// }
+    --rt-color-dark: var(--color3);
+    --rt-color-white: #000;
+}
 
 body{
     background-color: var(--color1);
@@ -42,6 +42,13 @@ body{
 
 .pr{
     position: relative;
+}
+
+.react-tooltip {
+    padding: 8px 16px;
+    border-radius: 3px;
+    font-size: 2rem;
+    width: max-content;
 }
 
 @keyframes fade-in {
@@ -61,3 +68,24 @@ body{
         opacity: 0%;
     }
 }
+
+//scroll bar
+/* width */
+::-webkit-scrollbar {
+    width: .5rem;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--color2);
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color3);
+  }
