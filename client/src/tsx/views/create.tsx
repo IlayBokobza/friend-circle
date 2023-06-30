@@ -20,7 +20,6 @@ export default function Create(){
     //load data if need to
     const [searchParams] = useSearchParams();
     const id = searchParams.get("id")
-    console.log(id)
     const quiz = useSelector((state:any) => (state.quizes.owned as Quiz[]).find((q:Quiz) => q.id == id))
     let membersSlim = quiz?.members.map((m:Member):NewMember => {
         const newM:any = {...m}
@@ -81,6 +80,10 @@ export default function Create(){
         }
     }
 
+    function copyLink(){
+        navigator.clipboard.writeText(`${window.location.origin}/quiz/${id}`)
+    }
+
     return <InnerPage>
         <NewMemberDialog addMember={addMember} showSate={showState}/>
         <div className="create">
@@ -88,6 +91,9 @@ export default function Create(){
             <div className="create__btns">
                 <Button onClick={() => setShow(true)} text="הוספת משתתף " color={1}/>
                 {/* <Button text="תוצאות" color={1}/> */}
+                <If condition={!!id}>
+                    <Button onClick={copyLink} text="העתק קישור" color={1}/>
+                </If>
                 <If condition={!!members.length && !!title}>
                     <Button onClick={save} text="שמירה" color={1}/>
                 </If>

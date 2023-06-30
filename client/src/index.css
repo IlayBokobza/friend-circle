@@ -52,6 +52,19 @@
     font-size: 7rem;
     margin-bottom: 5rem; }
 
+.home h1 {
+  text-align: right; }
+
+.home__quizes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow-y: auto;
+  max-height: 80%; }
+  .home__quizes .btn {
+    margin: 1rem;
+    font-size: 3rem; }
+
 .create {
   display: flex;
   flex-direction: column;
@@ -59,9 +72,11 @@
   .create__btns {
     display: flex;
     justify-content: space-between;
+    flex-direction: row-reverse;
     align-items: center;
     width: 100%;
-    margin: 2rem 0; }
+    margin: 2rem 0;
+    padding: 0 2rem; }
   .create h2 {
     align-self: center; }
 
