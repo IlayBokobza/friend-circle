@@ -48,3 +48,18 @@ func Create(title string, members []interface{}, owner primitive.ObjectID) (Quiz
 		Owner:   owner,
 	}, nil
 }
+
+func Get(ID primitive.ObjectID) (Quiz, error) {
+	//creates context
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	var q Quiz
+	var err = database.DB.Collection("quizes").FindOne(ctx, bson.M{"_id": ID}).Decode(&q)
+
+	if err != nil {
+		return *new(Quiz), err
+	}
+
+	return q, nil
+}

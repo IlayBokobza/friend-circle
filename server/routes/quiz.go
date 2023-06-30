@@ -1,10 +1,8 @@
 package routes
 
 import (
-	"context"
 	"encoding/json"
 	"net/http"
-	"time"
 
 	"friends.ilaydev.com/auth"
 	"friends.ilaydev.com/database"
@@ -21,15 +19,40 @@ func CreateQuizRoutes() {
 	ep.Post(postQuiz).Middleware(auth.Auth)
 	ep.Patch(patchQuiz).Middleware(auth.Auth)
 	ep.Create()
+
+	ep = gover.Endpoint("/api/quizes/minimal")
+	ep.Get(getQuizName)
+	ep.Create()
+}
+
+func getQuizName(w http.ResponseWriter, r *http.Request, _ map[string]interface{}) {
+	var idStr = r.URL.Query().Get("id")
+	var ID, err = primitive.ObjectIDFromHex(idStr)
+
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+		return
+	}
+
+	q, err := quiz.Get(ID)
+
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			w.WriteHeader(http.StatusNotFound)
+		} else {
+			w.WriteHeader(http.StatusInternalServerError)
+		}
+		w.Write([]byte(err.Error()))
+		return
+	}
+
+	w.Write([]byte(q.Title))
 }
 
 func getQuizes(w http.ResponseWriter, r *http.Request, md map[string]interface{}) {
-	//creates context
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-
 	var owerID = md["id"].(primitive.ObjectID)
-	var res, err = database.DB.Collection("quizes").Find(ctx, bson.M{"owner": owerID})
+	var res, err = database.DB.Collection("quizes").Find(r.Context(), bson.M{"owner": owerID})
 
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
@@ -42,7 +65,7 @@ func getQuizes(w http.ResponseWriter, r *http.Request, md map[string]interface{}
 	}
 
 	var quizes []quiz.Quiz
-	err = res.All(ctx, &quizes)
+	err = res.All(r.Context(), &quizes)
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -91,6 +114,24 @@ func patchQuiz(w http.ResponseWriter, r *http.Request, md map[string]interface{}
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(err.Error()))
+		return
+	}
+
+	//check if user ownes quiz
+	q, err := quiz.Get(ID)
+
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			w.WriteHeader(http.StatusNotFound)
+		} else {
+			w.WriteHeader(http.StatusInternalServerError)
+		}
+		w.Write([]byte(err.Error()))
+		return
+	}
+
+	if q.Owner != md["id"].(primitive.ObjectID) {
+		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
 

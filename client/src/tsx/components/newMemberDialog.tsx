@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useRef, useState } from "react";
 import Dialog from "./dialog";
 import Input from "./input";
 import Button from "./button";
+import Feedback from "./feedback";
 
 export default function NewMemberDialog(props:{addMember:Function,showSate:[boolean, Dispatch<SetStateAction<boolean>>]}){
     const dialogRef = useRef(null) as any
@@ -9,6 +10,7 @@ export default function NewMemberDialog(props:{addMember:Function,showSate:[bool
     let [name,setName] = useState("")
     let [email,setEmail] = useState("")
     let [password,setPassword] = useState("")
+    let [feedback,setFeedback] = useState("")
 
     function generatePassword(){
         setPassword(Math.random().toString(32).slice(2))
@@ -18,9 +20,14 @@ export default function NewMemberDialog(props:{addMember:Function,showSate:[bool
         setName("")
         setEmail("")
         setPassword("")
+        setFeedback("")
     }
 
-    function close(){
+    function submit(){
+        if(!name || !email || !password){
+            setFeedback('נא למלא את כל הפרטים')
+            return
+        }
         props.addMember(name,email,password)
         dialogRef.current.close()
     }
@@ -34,7 +41,8 @@ export default function NewMemberDialog(props:{addMember:Function,showSate:[bool
                 <span onClick={generatePassword} className="dialog__icon material-symbols-outlined">auto_fix</span>
                 <Input lrt value={password} setFunc={setPassword} placeholder="סיסמה"/>
             </div>
-            <Button onClick={close} text="הוסף" color={1}/>
+            <Feedback show={!!feedback} text={feedback}/>
+            <Button onClick={submit} text="הוסף" color={1}/>
         </Dialog>
     )
 }
