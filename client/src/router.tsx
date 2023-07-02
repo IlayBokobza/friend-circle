@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import GuardedRoute from './tsx/components/guardedRoute';
+import GuardedRoute from './tsx/components/general/guardedRoute';
 
 import Login from './tsx/views/login';
 import Signup from './tsx/views/signup';
