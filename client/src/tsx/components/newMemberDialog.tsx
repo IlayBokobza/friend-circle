@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction, useRef, useState } from "react";
-import Dialog from "./dialog";
-import Input from "./input";
-import Button from "./button";
-import Feedback from "./feedback";
+import Dialog from "./general/dialog";
+import Input from "./general/input";
+import Button from "./general/button";
+import Feedback from "./general/feedback";
 
 export default function NewMemberDialog(props:{addMember:Function,showSate:[boolean, Dispatch<SetStateAction<boolean>>]}){
     const dialogRef = useRef(null) as any

@@ -1,9 +1,9 @@
-import Button from "../components/button";
+import Button from "../components/general/button";
 import InnerPage from "../components/innerPage";
-import Input from "../components/input";
+import Input from "../components/general/input";
 import {useState} from 'react'
 import MembersTable from "../components/membersTable";
-import If from "../components/if";
+import If from "../components/general/if";
 import axios from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom"
 import NewMemberDialog from "../components/newMemberDialog";

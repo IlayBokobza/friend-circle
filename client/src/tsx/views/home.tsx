@@ -1,6 +1,6 @@
 import { Quiz } from "../../store/quizSlice";
 import { User } from "../../store/userSlice";
-import Button from "../components/button";
+import Button from "../components/general/button";
 import InnerPage from "../components/innerPage";
 import {useSelector} from 'react-redux'
 

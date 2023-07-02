@@ -1,9 +1,9 @@
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import Button from "./button";
-import Input from "./input";
+import Button from "./general/button";
+import Input from "./general/input";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Feedback from "./feedback";
+import Feedback from "./general/feedback";
 import { QuizMinimal } from "../../store/quizSlice";
 
 export default function QuizLogin(props:{onLoggedIn:Function,onGetData:Function}){

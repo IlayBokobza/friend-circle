@@ -1,4 +1,4 @@
-import Button from "../components/button";
+import Button from "../components/general/button";
 
 export default function P404(){
     return <div className="P404">

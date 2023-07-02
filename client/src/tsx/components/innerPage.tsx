@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import If from "./if"
+import If from "./general/if"
 
 export default function InnerPage(props:{children?:React.ReactNode,title?:string,className?:string,disableLink?:boolean}){
     const title = (props.title) ? props.title : 'מעגל החברים'

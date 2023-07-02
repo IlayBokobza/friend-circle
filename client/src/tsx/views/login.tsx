@@ -1,8 +1,8 @@
-import Input from "../components/input"
-import Button from "../components/button"
+import Input from "../components/general/input"
+import Button from "../components/general/button"
 import { Link } from "react-router-dom"
 import { useState } from "react"
-import Feedback from "../components/feedback"
+import Feedback from "../components/general/feedback"
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { setAll } from '../../store/userSlice'
