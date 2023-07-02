@@ -129,6 +129,10 @@
     position: absolute;
     right: 3rem;
     user-select: none; }
+  .quizForm__sendbtn {
+    position: absolute;
+    bottom: 1rem;
+    left: 2rem; }
 
 .input {
   background-color: var(--color3);

@@ -24,7 +24,64 @@ func CreateQuizRoutes() {
 	ep = gover.Endpoint("/api/quizes/minimal")
 	ep.Get(getQuizMinimal)
 	ep.Post(quizLogin)
+	ep.Patch(memberAnswer)
 	ep.Create()
+}
+
+func memberAnswer(w http.ResponseWriter, r *http.Request, _ map[string]interface{}) {
+	var idStr = r.URL.Query().Get("id")
+	var member, err = quiz.GetMemberFromBody(r.Body)
+
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+		return
+	}
+
+	ID, err := primitive.ObjectIDFromHex(idStr)
+
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+		return
+	}
+
+	q, err := quiz.Get(ID)
+
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			w.WriteHeader(http.StatusNotFound)
+		} else {
+			w.WriteHeader(http.StatusInternalServerError)
+		}
+		w.Write([]byte(err.Error()))
+		return
+	}
+
+	//set response
+	var isFound = false
+	for i, m := range q.Members {
+		if m.ID == member.ID {
+			if m.Email == member.Email && m.Password == member.Password {
+				isFound = true
+				q.Members[i] = member
+			}
+			break
+		}
+	}
+
+	if !isFound {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	_, err = database.DB.Collection("quizes").UpdateByID(r.Context(), ID, bson.M{"$set": q})
+
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(err.Error()))
+		return
+	}
 }
 
 func quizLogin(w http.ResponseWriter, r *http.Request, _ map[string]interface{}) {
@@ -62,6 +119,11 @@ func quizLogin(w http.ResponseWriter, r *http.Request, _ map[string]interface{})
 	for _, m := range q.Members {
 		if m.Email == email {
 			if m.Password == password {
+				if len(m.Response.Natrual)+len(m.Response.Friend)+len(m.Response.CloseFriend)+len(m.Response.GoodFriend) != 0 {
+					w.WriteHeader(http.StatusForbidden)
+					w.Write([]byte("עניית כבר על השאלון"))
+					return
+				}
 				j, err := json.Marshal(m)
 
 				if err != nil {

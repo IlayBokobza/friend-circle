@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 
 type Color = 1 | 2 |3 | 4
 
-export default function Button(props:{text:string,color:Color,round?:boolean,linkTo?:string,onClick?:MouseEventHandler<HTMLButtonElement>}){
+export default function Button(props:{text:string,color:Color,className?:string,round?:boolean,linkTo?:string,onClick?:MouseEventHandler<HTMLButtonElement>}){
 
     
     function getClassName(){
@@ -11,6 +11,10 @@ export default function Button(props:{text:string,color:Color,round?:boolean,lin
 
         if(props.round){
             className += ' btn--round'
+        }
+        
+        if(props.className){
+            className += ' ' + props.className
         }
 
         return className

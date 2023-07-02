@@ -6,6 +6,9 @@ import InnerPage from "../components/innerPage";
 import { Tooltip } from 'react-tooltip'
 import MemberCard from "../components/memberCard";
 import DraggingCard from "../components/draggingCrard";
+import Button from "../components/general/button";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 function useForceUpdate() {
     let [value, setState] = useState(true);
@@ -17,6 +20,7 @@ export default function QuizForm(){
     const [quiz,setQuiz] = useState({} as QuizMinimal)
     const previewRef = useRef(null) as any
     const forceUpdate = useForceUpdate();
+    const {id} = useParams()
 
 
     //lists
@@ -73,6 +77,26 @@ export default function QuizForm(){
         setFriends([])
     },[])
 
+    async function submit(){
+        const data = {
+            ...me,
+            response:{
+                naturals:naturals.map((m) => m.id),
+                friends:friends.map((m) => m.id),
+                goodFriends:goodFriends.map((m) => m.id),
+                closeFriends:closeFriends.map((m) => m.id)
+            }
+        }
+
+        try{
+            await axios.patch(`/api/quizes/minimal?id=${id}`,data)
+            window.location.replace(`${window.location.origin}/quiz/${id}`)
+        }
+        catch(e){
+            console.warn(e)
+        }
+    }
+
     if(!me.name){
         return <QuizLogin onGetData={setQuiz} onLoggedIn={setMe} />
     }
@@ -121,5 +145,6 @@ export default function QuizForm(){
                     ))}
                 </div>
             </div>
+            <Button onClick={submit} className="quizForm__sendbtn" text="סיימתי" color={3}/>
         </InnerPage>
 }

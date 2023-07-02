@@ -4,7 +4,6 @@ import Input from "./general/input";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Feedback from "./general/feedback";
-import { QuizMinimal } from "../../store/quizSlice";
 
 export default function QuizLogin(props:{onLoggedIn:Function,onGetData:Function}){
     const {id} = useParams()
