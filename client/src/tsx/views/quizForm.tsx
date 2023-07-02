@@ -67,7 +67,7 @@ export default function QuizForm(){
 
     useEffect(() => {
         setNaturals(quiz.members?.filter((m:MemberMinimal) => m.id !== me.id))
-    },[quiz])
+    },[quiz,me])
 
     useEffect(() => {
         setFriends([])
@@ -122,8 +122,4 @@ export default function QuizForm(){
                 </div>
             </div>
         </InnerPage>
-}
-
-function updateState(arg0: {}): any {
-    throw new Error("Function not implemented.");
 }
