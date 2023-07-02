@@ -10,13 +10,13 @@ import Cookie from 'js-cookie'
 
 export default function Signup(){
     //form
-    let [email,setEmail] = useState("")
-    let [name,setName] = useState("")
-    let [password,setPassword] = useState("")
-    let [password2,setPassword2] = useState("")
+    const [email,setEmail] = useState("")
+    const [name,setName] = useState("")
+    const [password,setPassword] = useState("")
+    const [password2,setPassword2] = useState("")
 
     //extra
-    let [feedback,setFeedback] = useState("")
+    const [feedback,setFeedback] = useState("")
     const dispatch = useDispatch()
 
     async function handleClick(){

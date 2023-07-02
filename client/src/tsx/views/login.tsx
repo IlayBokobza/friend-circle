@@ -10,9 +10,9 @@ import Cookie from 'js-cookie'
 
 export default function Login(){
     //state
-    let [email,setEmail] = useState("")
-    let [password,setPassword] = useState("")
-    let [feedback,setFeedback] = useState("")
+    const [email,setEmail] = useState("")
+    const [password,setPassword] = useState("")
+    const [feedback,setFeedback] = useState("")
 
     //redux
     const dispatch = useDispatch()
@@ -54,7 +54,7 @@ export default function Login(){
             <div className="login__side">
                 <h2>התחברות</h2>
                 <Input value={email} lrt setFunc={setEmail} placeholder="איימל"></Input>
-                <Input value={email} setFunc={setPassword} placeholder="סיסמה" type="password"></Input>
+                <Input value={password} setFunc={setPassword} placeholder="סיסמה" type="password"></Input>
                 <Feedback show={!!feedback} text={feedback}></Feedback>
                 <Button onClick={handleClick} text="התחבר" color={1}></Button>
                 <Link className="login__side__switch-page" to={"/signup"}>משתמש חדש</Link>

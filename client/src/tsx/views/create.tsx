@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 let membersRaw:Member[] = []
 export default function Create(){
     const showState = useState(false)
-    let [_,setShow] = showState
+    const [_,setShow] = showState
     const navigate = useNavigate()
     const dispatch = useDispatch()
     
@@ -28,8 +28,8 @@ export default function Create(){
     }) || []
 
     //set state
-    let [title,setTitle] = useState(quiz?.title || "")
-    let [members,setMembers] = useState((membersSlim) ? [...membersSlim] : [] as NewMember[])
+    const [title,setTitle] = useState(quiz?.title || "")
+    const [members,setMembers] = useState((membersSlim) ? [...membersSlim] : [] as NewMember[])
     if(!membersRaw.length){
         membersRaw = (quiz) ? [...quiz.members] : []
     }

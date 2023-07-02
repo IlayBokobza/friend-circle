@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Button from "./button";
 import Input from "./input";
 import { useEffect, useState } from "react";
@@ -10,10 +10,15 @@ export default function QuizLogin(props:{onLoggedIn:Function,onGetData:Function}
     const {id} = useParams()
     const navigate = useNavigate()
     
-    let [title,setTitle] = useState("")
-    let [email,setEmail] = useState("")
-    let [password,setPassword] = useState("")
-    let [feedback,setFeedback] = useState("")
+    const [title,setTitle] = useState("")
+    const [email,setEmail] = useState("")
+    const [password,setPassword] = useState("")
+    const [feedback,setFeedback] = useState("")
+    const [searchParams] = useSearchParams();
+    const emailQuery = searchParams.get('email')
+    const passwordQuery = searchParams.get('password')
+
+
 
     useEffect(() => {
         (async () => {
@@ -25,6 +30,11 @@ export default function QuizLogin(props:{onLoggedIn:Function,onGetData:Function}
                 navigate('/404')
             }
         })()
+
+        if(emailQuery && passwordQuery){
+            setEmail(emailQuery)
+            setPassword(passwordQuery)
+        }
     },[])
 
 

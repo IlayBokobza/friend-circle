@@ -3,12 +3,15 @@ import Cookie from 'js-cookie';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux'
 import {RouterProvider} from "react-router-dom";
+import {DndProvider} from 'react-dnd'
+import {HTML5Backend} from 'react-dnd-html5-backend'
 
 import router from './router'
 import store from './store/store'
 import { setQuizes } from './store/quizSlice';
 import {setAll} from './store/userSlice'
 import './index.css';
+import React from 'react';
 
 async function main(){
   //auto sign in
@@ -31,9 +34,13 @@ async function main(){
     document.getElementById('root') as HTMLElement
   );
   root.render(
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
+    <React.StrictMode>
+      <DndProvider backend={HTML5Backend}>
+          <Provider store={store}>
+            <RouterProvider router={router} />
+          </Provider>
+      </DndProvider>
+    </React.StrictMode>
   );
 }
 

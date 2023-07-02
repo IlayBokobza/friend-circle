@@ -7,10 +7,10 @@ import Feedback from "./feedback";
 export default function NewMemberDialog(props:{addMember:Function,showSate:[boolean, Dispatch<SetStateAction<boolean>>]}){
     const dialogRef = useRef(null) as any
 
-    let [name,setName] = useState("")
-    let [email,setEmail] = useState("")
-    let [password,setPassword] = useState("")
-    let [feedback,setFeedback] = useState("")
+    const [name,setName] = useState("")
+    const [email,setEmail] = useState("")
+    const [password,setPassword] = useState("")
+    const [feedback,setFeedback] = useState("")
 
     function generatePassword(){
         setPassword(Math.random().toString(32).slice(2))

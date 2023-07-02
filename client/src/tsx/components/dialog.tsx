@@ -1,4 +1,4 @@
-import React, { Dispatch, MutableRefObject, Ref, SetStateAction, forwardRef, useImperativeHandle, useState } from "react";
+import React, { Dispatch, Ref, SetStateAction, forwardRef, useImperativeHandle, useState } from "react";
 
 const Dialog = forwardRef((props:{children?:React.ReactNode,onClose?:Function,showSate:[boolean, Dispatch<SetStateAction<boolean>>]},ref:Ref<any>) => {
     const [show,setShow] = props.showSate
