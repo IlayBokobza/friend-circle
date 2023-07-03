@@ -107,13 +107,14 @@
       position: absolute;
       transform: translateX(-50%);
       cursor: grabbing !important;
-      z-index: 100;
-      display: none; }
+      z-index: 100; }
     .quizForm__member--notdragging {
       position: relative;
       top: 0 !important;
       left: 0 !important;
       width: auto !important; }
+    .quizForm__member--blank {
+      opacity: 0; }
   .quizForm__col {
     display: flex;
     flex-direction: column;

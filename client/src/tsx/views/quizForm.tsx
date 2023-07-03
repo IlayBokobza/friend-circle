@@ -5,7 +5,6 @@ import QuizLogin from "../components/quizLogin";
 import InnerPage from "../components/innerPage";
 import { Tooltip } from 'react-tooltip'
 import MemberCard from "../components/memberCard";
-import DraggingCard from "../components/draggingCrard";
 import Button from "../components/general/button";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -22,6 +21,11 @@ export default function QuizForm(){
     const forceUpdate = useForceUpdate();
     const {id} = useParams()
 
+    //cols
+    const col1 = useRef<HTMLDivElement>(null)
+    const col2 = useRef<HTMLDivElement>(null)
+    const col3 = useRef<HTMLDivElement>(null)
+    const col4 = useRef<HTMLDivElement>(null)
 
     //lists
     const [naturals,setNaturals] = useState([] as MemberMinimal[])
@@ -34,7 +38,6 @@ export default function QuizForm(){
         setFriends(n => n.filter(m => m.id != id))
         setGoodFriends(n => n.filter(m => m.id != id))
         setCloseFriends(n => n.filter(m => m.id != id))
-        previewRef.current.stop()
     }
 
     const [_0,naturalsDrop] = useDrop(() => ({
@@ -71,6 +74,9 @@ export default function QuizForm(){
 
     useEffect(() => {
         setNaturals(quiz.members?.filter((m:MemberMinimal) => m.id !== me.id))
+        setFriends([])
+        setGoodFriends([])
+        setCloseFriends([])
     },[quiz,me])
 
     useEffect(() => {
@@ -104,44 +110,43 @@ export default function QuizForm(){
     
 
     return <InnerPage className="quizForm" disableLink title={`שלום, ${me.name}`}>
-            <DraggingCard ref={previewRef}/>
-            <div className="quizForm__col">
+            <div ref={col1} className="quizForm__col">
                 <Tooltip anchorSelect="#help__natural">מישהו שאין לך שום קשר איתו</Tooltip>
                 <span id="help__natural" className="quizForm__help material-symbols-outlined">help</span>
                 <div className="quizForm__title">פסיבי</div>
                 <div ref={naturalsDrop} className="quizForm__col__container">
                     {naturals?.map((m:MemberMinimal) => (
-                        <MemberCard updateFn={previewRef.current?.update || (()=>{forceUpdate()})} id={m.id} name={m.name} key={m.id}/>
+                        <MemberCard col={col1} id={m.id} name={m.name} key={m.id}/>
                     ))}
                 </div>
             </div>
-            <div className="quizForm__col">
+            <div ref={col2} className="quizForm__col">
                 <Tooltip anchorSelect="#help__friend">מישהו שיש לך קצת קשר איתו.</Tooltip>
                 <span id="help__friend" className="quizForm__help material-symbols-outlined">help</span>
                 <div className="quizForm__title">ידיד</div>
                 <div ref={friendsDrop} className="quizForm__col__container">
                     {friends?.map((m:MemberMinimal) => (
-                        <MemberCard updateFn={previewRef.current?.update || (()=>{})} id={m.id} name={m.name} key={m.id}/>
+                        <MemberCard col={col2} id={m.id} name={m.name} key={m.id}/>
                     ))}
                 </div>
             </div>
-            <div className="quizForm__col">
+            <div ref={col3} className="quizForm__col">
                 <Tooltip anchorSelect="#help__goodFriend">מישהו שיש לך קשר טוב איתו, ולפעמים אתם עושים פעילות ביחד</Tooltip>
                 <span id="help__goodFriend" className="quizForm__help material-symbols-outlined">help</span>
                 <div className="quizForm__title">חבר</div>
                 <div ref={goodFriendsDrop} className="quizForm__col__container">
                     {goodFriends?.map((m:MemberMinimal) => (
-                        <MemberCard updateFn={previewRef.current?.update || (()=>{})} id={m.id} name={m.name} key={m.id}/>
+                        <MemberCard col={col3} id={m.id} name={m.name} key={m.id}/>
                     ))}
                 </div>
             </div>
-            <div className="quizForm__col">
+            <div ref={col4} className="quizForm__col">
                 <Tooltip anchorSelect="#help__closeFriend">הוא בין החברים הכי טובים שלך. אתם מדברים על בסיס קבוע</Tooltip>
                 <span id="help__closeFriend" className="quizForm__help material-symbols-outlined">help</span>
                 <div className="quizForm__title">חבר קרוב</div>
                 <div ref={closeFriendsDrop} className="quizForm__col__container">
                     {closeFriends?.map((m:MemberMinimal) => (
-                        <MemberCard updateFn={previewRef.current?.update || (()=>{})} id={m.id} name={m.name} key={m.id}/>
+                        <MemberCard col={col4} id={m.id} name={m.name} key={m.id}/>
                     ))}
                 </div>
             </div>

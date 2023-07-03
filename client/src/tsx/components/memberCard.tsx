@@ -1,8 +1,9 @@
-import React, {useEffect} from 'react'
+import React, {CSSProperties, RefObject, useEffect, useState} from 'react'
 import { useDrag } from 'react-dnd'
 import { getEmptyImage } from 'react-dnd-html5-backend'
+import If from './general/if'
 
-export default function MemberCard(props:{ id:string, name:string,updateFn:(name:string,top:number,left:number) => void}) {
+export default function MemberCard(props:{ id:string, name:string,col:RefObject<HTMLDivElement>}) {
   const [{isDragging},ref,preview] = useDrag(() => ({
     type:"member",
     item:{
@@ -14,15 +15,33 @@ export default function MemberCard(props:{ id:string, name:string,updateFn:(name
     })
   }))
 
+  const [style,setStyle] = useState({} as CSSProperties)
+
   useEffect(() => {
     preview(getEmptyImage(), { captureDraggingState: false })
   }, [])
 
+  const pos = props.col.current!.getBoundingClientRect()
   function drag(e:React.DragEvent<HTMLDivElement>){
-    props.updateFn(props.name,e.clientY,e.clientX)
+    const memberRef = document.querySelector('.quizForm__member--notdragging')
+    setStyle({
+      top:`${e.clientY - pos.top}px`,
+      left:`${e.clientX - pos.left}px`,
+      width:`${memberRef?.clientWidth}px`
+    })
   }
 
   return (
-    <div onDrag={drag}  className="quizForm__member quizForm__member--notdragging" style={{opacity:isDragging ? 0: 1}} ref={ref}>{props.name}</div>
+    <>
+      <div 
+        onDrag={drag}
+        className={"quizForm__member " + (isDragging ? "quizForm__member--dragging" : "quizForm__member--notdragging")}
+        style={style} 
+        ref={ref}
+      >{props.name}</div>
+      <If condition={isDragging}>
+        <div className="quizForm__member quizForm__member--blank">blank</div>
+      </If>
+    </>
   )
 }
