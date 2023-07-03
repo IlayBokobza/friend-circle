@@ -9,16 +9,9 @@ import Button from "../components/general/button";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
-function useForceUpdate() {
-    let [value, setState] = useState(true);
-    return () => setState(!value);
-}
-
 export default function QuizForm(){
     const [me,setMe] = useState({} as Member)
     const [quiz,setQuiz] = useState({} as QuizMinimal)
-    const previewRef = useRef(null) as any
-    const forceUpdate = useForceUpdate();
     const {id} = useParams()
 
     //cols
