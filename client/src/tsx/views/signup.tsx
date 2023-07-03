@@ -4,8 +4,6 @@ import { Link } from "react-router-dom"
 import { useState } from "react"
 import Feedback from "../components/general/feedback"
 import axios from "axios"
-import { useDispatch } from 'react-redux'
-import { setAll } from '../../store/userSlice'
 import Cookie from 'js-cookie'
 
 export default function Signup(){
@@ -17,7 +15,6 @@ export default function Signup(){
 
     //extra
     const [feedback,setFeedback] = useState("")
-    const dispatch = useDispatch()
 
     async function handleClick(){
         //validate form
@@ -42,7 +39,7 @@ export default function Signup(){
         try {
             const res = await axios.post('/api/user',{email,password,name})
             Cookie.set('token',res.data.token)
-            dispatch(setAll(res.data))
+            window.location.reload()
         } catch (error:any) {
             if(error.response.data){
                 setFeedback(error.response.data)

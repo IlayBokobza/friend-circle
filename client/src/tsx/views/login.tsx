@@ -4,8 +4,6 @@ import { Link } from "react-router-dom"
 import { useState } from "react"
 import Feedback from "../components/general/feedback"
 import axios from 'axios'
-import { useDispatch } from 'react-redux'
-import { setAll } from '../../store/userSlice'
 import Cookie from 'js-cookie'
 
 export default function Login(){
@@ -13,9 +11,6 @@ export default function Login(){
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
     const [feedback,setFeedback] = useState("")
-
-    //redux
-    const dispatch = useDispatch()
 
     async function handleClick(){
         //check email
@@ -35,7 +30,7 @@ export default function Login(){
         try {
             const res = await axios.post('/api/user/login',{email,password})
             Cookie.set('token',res.data.token)
-            dispatch(setAll(res.data))
+            window.location.reload()
         } catch (error:any) {
             if(error.response.data){
                 setFeedback(error.response.data)

@@ -2,7 +2,6 @@ package routes
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"friends.ilaydev.com/auth"
@@ -13,8 +12,6 @@ import (
 )
 
 func CreateUserRoutes() {
-	fmt.Println("createing user")
-
 	// /user
 	var ep = gover.Endpoint("/api/user")
 	ep.Post(signup)

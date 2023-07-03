@@ -11,5 +11,6 @@ func main() {
 	routes.CreateUserRoutes()
 	routes.CreateQuizRoutes()
 
+	gover.HostSPA("./build")
 	gover.Listen(3000)
 }
