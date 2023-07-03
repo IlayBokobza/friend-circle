@@ -21,8 +21,8 @@ export default function MemberCard(props:{ id:string, name:string,col:RefObject<
     preview(getEmptyImage(), { captureDraggingState: false })
   }, [])
 
-  const pos = props.col.current!.getBoundingClientRect()
   function drag(e:React.DragEvent<HTMLDivElement>){
+    const pos = props.col.current!.getBoundingClientRect()
     const memberRef = document.querySelector('.quizForm__member--notdragging')
     setStyle({
       top:`${e.clientY - pos.top}px`,

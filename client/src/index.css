@@ -56,12 +56,24 @@
 .home h1 {
   text-align: right; }
 
-.home__quizes {
+.home h2 {
+  text-align: center;
+  display: block;
+  border-bottom: 1px solid #000; }
+
+.home__container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; }
+  .home__container--single {
+    grid-template-columns: 1fr; }
+
+.home__list {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  overflow-y: auto;
-  max-height: 80%; }
+  flex-wrap: wrap; }
+
+.home__quizes {
+  display: grid; }
   .home__quizes .btn {
     margin: 1rem;
     font-size: 3rem; }
@@ -158,6 +170,8 @@
   border: .2rem solid #000;
   text-decoration: none;
   display: inline-block;
+  direction: rtl;
+  text-align: center;
   cursor: pointer;
   transition: all .2s;
   box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
@@ -220,7 +234,8 @@
     height: 80vh;
     border-radius: .4rem;
     color: #000;
-    padding: 1rem; }
+    padding: 1rem;
+    overflow-y: auto; }
 
 .dialog {
   position: fixed;
@@ -292,7 +307,8 @@
   --rt-color-white: #000; }
 
 body {
-  background-color: var(--color1); }
+  background-color: var(--color1);
+  overflow: hidden; }
 
 .pr {
   position: relative; }

@@ -1,22 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+//full quiz type
 export type Quiz = {
   title:string;
   id:string;
   members:Member[];
+  open:boolean,
 }
 
+//quiz when requested by a member
 export type QuizMinimal = {
-    title:string;
-    id:string;
-    members:MemberMinimal[];
-}
-
-export type NewQuiz = {
   title:string;
-  members:Member[];
+  id:string;
+  members:MemberMinimal[];
 }
 
+//full member type
 export type Member = {
   name:string;
   email:string;
@@ -25,17 +24,13 @@ export type Member = {
   id:string;
 }
 
-export type NewMember = {
-  name:string,
-  email:string,
-  password:string
-}
-
+//member when requeseted by another member
 export type MemberMinimal = {
   name:string;
   id:string,
 }
 
+//Response type
 export type Response = {
   natrual:string[];
   friend:string[];

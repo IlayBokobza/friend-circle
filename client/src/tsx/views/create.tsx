@@ -7,8 +7,19 @@ import If from "../components/general/if";
 import axios from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom"
 import NewMemberDialog from "../components/newMemberDialog";
-import { Member, NewMember, NewQuiz, Quiz, addQuiz, updateQuiz } from "../../store/quizSlice";
+import { Member, Quiz, addQuiz, updateQuiz } from "../../store/quizSlice";
 import { useDispatch, useSelector } from "react-redux";
+
+type NewQuiz = {
+    title:string;
+    members:Member[];
+}
+
+export type NewMember = {
+    name:string,
+    email:string,
+    password:string
+}
 
 let membersRaw:Member[] = []
 export default function Create(){
@@ -56,7 +67,7 @@ export default function Create(){
         }
     }
 
-    async function update(data:NewQuiz){
+    async function update(data:NewQuiz | Quiz){
         try{
             await axios.patch(`/api/quizes?id=${id}`,data)
             dispatch(updateQuiz({...data,id}))
@@ -89,12 +100,30 @@ export default function Create(){
         <div className="create">
             <Input setFunc={setTitle} value={title} placeholder="שם השאלון"/>
             <div className="create__btns">
-                <Button onClick={() => setShow(true)} text="הוספת משתתף " color={1}/>
-                {/* <Button text="תוצאות" color={1}/> */}
-                <If condition={!!id}>
+                {/* active quiz buttons */}
+                {/* results */}
+                <If condition={!!quiz?.open}>
+                    <Button text="תוצאות" color={1}/>
+                </If>
+                
+                {/* copy link */}
+                <If condition={!!id && quiz!.open}>
                     <Button onClick={copyLink} text="העתק קישור" color={1}/>
                 </If>
-                <If condition={!!members.length && !!title}>
+
+                {/* draft buttons */}
+                {/* add user */}
+                <If condition={!quiz?.open}>
+                    <Button onClick={() => setShow(true)} text="הוספת משתתף " color={1}/>
+                </If>
+
+                {/* open quiz */}
+                <If condition={!!id && !quiz?.open}>
+                    <Button onClick={() => update({...quiz!,open:true})} text="פתח שאלון" color={1}/>
+                </If>
+
+                {/* save */}
+                <If condition={!!members.length && !!title && !quiz?.open}>
                     <Button onClick={save} text="שמירה" color={1}/>
                 </If>
             </div>

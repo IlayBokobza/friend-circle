@@ -1,5 +1,5 @@
 import {JSX} from "react"
-import { NewMember } from "../../store/quizSlice"
+import { NewMember } from "../views/create"
 
 export default function MembersTable(props:{members:NewMember[]}){
     if(!props.members.length){

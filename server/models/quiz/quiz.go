@@ -16,6 +16,7 @@ type Quiz struct {
 	ID      primitive.ObjectID `json:"id" bson:"_id"`
 	Members []Member           `json:"members"`
 	Owner   primitive.ObjectID `bson:"owner" json:"-"`
+	Open    bool               `json:"open"`
 }
 
 type QuizMinmal struct {
@@ -61,6 +62,7 @@ func Create(title string, members []Member, owner primitive.ObjectID) (Quiz, err
 		ID:      res.InsertedID.(primitive.ObjectID),
 		Members: []Member{},
 		Owner:   owner,
+		Open:    false,
 	}, nil
 }
 

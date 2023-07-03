@@ -58,6 +58,11 @@ func memberAnswer(w http.ResponseWriter, r *http.Request, _ map[string]interface
 		return
 	}
 
+	if !q.Open {
+		w.WriteHeader(http.StatusForbidden)
+		return
+	}
+
 	//set response
 	var isFound = false
 	for i, m := range q.Members {
@@ -114,6 +119,11 @@ func quizLogin(w http.ResponseWriter, r *http.Request, _ map[string]interface{})
 		return
 	}
 
+	if !q.Open {
+		w.WriteHeader(http.StatusForbidden)
+		return
+	}
+
 	var email = data["email"].(string)
 	var password = data["password"].(string)
 	for _, m := range q.Members {
@@ -162,6 +172,11 @@ func getQuizMinimal(w http.ResponseWriter, r *http.Request, _ map[string]interfa
 			w.WriteHeader(http.StatusInternalServerError)
 		}
 		w.Write([]byte(err.Error()))
+		return
+	}
+
+	if !q.Open {
+		w.WriteHeader(http.StatusForbidden)
 		return
 	}
 

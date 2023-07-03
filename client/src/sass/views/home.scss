@@ -3,12 +3,30 @@
         text-align: right;
     }
 
-    &__quizes{
+    h2{
+        text-align: center;
+        // margin: 3rem 41%;
+        display: block;
+        border-bottom: 1px solid #000;
+    }
+
+    &__container{
+        display: grid;
+        grid-template-columns:1fr 1fr ;
+        
+        &--single{
+            grid-template-columns:1fr;
+        }
+    }
+
+    &__list{
         display: flex;
-        flex-wrap: wrap;
         justify-content: center;
-        overflow-y: auto;
-        max-height: 80%;
+        flex-wrap: wrap;
+    }
+
+    &__quizes{
+        display: grid;
 
         .btn{
             margin: 1rem;
