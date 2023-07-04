@@ -1,7 +1,7 @@
 import Button from "../components/general/button";
 import InnerPage from "../components/innerPage";
 import Input from "../components/general/input";
-import {useState} from 'react'
+import {useRef, useState} from 'react'
 import MembersTable from "../components/membersTable";
 import If from "../components/general/if";
 import axios from "axios";
@@ -21,7 +21,6 @@ export type NewMember = {
     password:string
 }
 
-let membersRaw:Member[] = []
 export default function Create(){
     const showState = useState(false)
     const [_,setShow] = showState
@@ -37,13 +36,11 @@ export default function Create(){
         delete newM.response
         return newM
     }) || []
+    const membersRaw = useRef((quiz) ? [...quiz.members] : [])
 
     //set state
     const [title,setTitle] = useState(quiz?.title || "")
     const [members,setMembers] = useState((membersSlim) ? [...membersSlim] : [] as NewMember[])
-    if(!membersRaw.length){
-        membersRaw = (quiz) ? [...quiz.members] : []
-    }
     
     function addMember(name:string,email:string,password:string){
         const m = {name,email,password,id:"",response:{
@@ -52,7 +49,7 @@ export default function Create(){
             goodFriend:[],
             closeFriend:[]
         }}
-        membersRaw = [...membersRaw,m]
+        membersRaw.current = [...membersRaw.current,m]
         setMembers([...members,{name,email,password}])
     }
 
@@ -80,7 +77,7 @@ export default function Create(){
     function save(){
         const data = {
             title,
-            members:membersRaw,
+            members:membersRaw.current,
         }
 
         if(!quiz){

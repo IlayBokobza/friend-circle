@@ -10,7 +10,6 @@ export default function Home(){
     const quizes:Quiz[] = useSelector((state:any) => state.quizes.owned)
     const open = quizes.filter(q => q.open)
     const drafts = quizes.filter(q => !q.open)
-    console.log(open.length,drafts.length)
 
     return <InnerPage className="home">
         <h1>שלום, {user.name}</h1>
